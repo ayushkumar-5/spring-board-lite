@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useToast } from "@/contexts/ToastContext";
-import { api } from "@/lib/api";
+
 import { Task, Column } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Moon, Sun, LogOut, Search } from "lucide-react";
@@ -61,7 +61,9 @@ export default function BoardPage() {
     try {
       setLoading(true);
       setError("");
-      const data = await api.getTasks();
+      const response = await fetch("/api/tasks");
+      if (!response.ok) throw new Error("Failed to fetch tasks");
+      const data = await response.json();
       setTasks(data);
     } catch (error) {
       setError("Couldn't load tasks");
@@ -73,7 +75,13 @@ export default function BoardPage() {
 
   const createTask = async (data: { title: string; description: string; priority: "low" | "medium" | "high" }) => {
     try {
-      const newTask = await api.createTask(data);
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to create task");
+      const newTask = await response.json();
       setTasks(prev => [...prev, newTask]);
       setShowModal(false);
       showToast("Task created!", "success");
@@ -99,7 +107,13 @@ export default function BoardPage() {
     ));
 
     try {
-      await api.updateTask(task.id, { status: newStatus });
+              const response = await fetch(`/api/tasks/${task.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus }),
+        });
+        
+        if (!response.ok) throw new Error("Failed to update task");
       
       // Show undo option
       showToast(
@@ -126,7 +140,13 @@ export default function BoardPage() {
         t.id === taskId ? { ...t, status: oldStatus as Task["status"] } : t
       ));
 
-      await api.updateTask(taskId, { status: oldStatus as Task["status"] });
+      const response = await fetch(`/api/tasks/${taskId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: oldStatus as Task["status"] }),
+      });
+      
+      if (!response.ok) throw new Error("Failed to undo move");
       showToast("Undone!", "success");
     } catch (error) {
       fetchTasks();
@@ -136,7 +156,8 @@ export default function BoardPage() {
 
   const deleteTask = async (taskId: string) => {
     try {
-      await api.deleteTask(taskId);
+      const response = await fetch(`/api/tasks/${taskId}`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Failed to delete task");
       setTasks(prev => prev.filter(t => t.id !== taskId));
       showToast("Task deleted", "success");
     } catch (error) {

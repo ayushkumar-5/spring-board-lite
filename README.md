@@ -8,7 +8,7 @@ A modern task management application built with Next.js 15, TypeScript, Tailwind
 1. **Authentication (Mocked)**
    - `/login` route with any non-empty email/password
    - Fake token stored in localStorage and cookies
-   - Protected `/board` route with middleware
+   - Protected `/board` route with Next.js middleware
    - Logout functionality
 
 2. **Board Functionality**
@@ -42,11 +42,11 @@ A modern task management application built with Next.js 15, TypeScript, Tailwind
 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
+- **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **State Management**: React Context API
-- **Mock API**: json-server
+- **Mock API**: Next.js API Routes
 - **Deployment**: Vercel
 
 ## 📦 Installation
@@ -54,7 +54,7 @@ A modern task management application built with Next.js 15, TypeScript, Tailwind
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd sprint-board-nextjs
+cd spring-board-lite
 ```
 
 2. Install dependencies:
@@ -67,38 +67,36 @@ npm install
 npm run dev
 ```
 
-4. Start the mock API server (in a separate terminal):
-```bash
-npm run server
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 🔧 Scripts
 
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production with Turbopack
+- `npm run dev` - Start development server with Next.js
+- `npm run build` - Build for production
 - `npm run start` - Start production server
-- `npm run server` - Start json-server mock API
 
 ## 🏗️ Project Structure
 
 ```
 src/
 ├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   │   └── tasks/         # Tasks CRUD endpoints
 │   ├── board/             # Board page
 │   ├── login/             # Login page
 │   ├── globals.css        # Global styles
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page (redirects)
 ├── components/            # Reusable components
-│   └── toast.tsx          # Toast notifications
+│   ├── CreateTaskModal.tsx # Task creation modal
+│   ├── ModernColumnComponent.tsx # Column component
+│   ├── ModernTaskCard.tsx # Task card component
+│   ├── SearchAndFilters.tsx # Search and filter UI
+│   └── ToastContainer.tsx # Toast notifications
 ├── contexts/              # React Context providers
-│   ├── auth-context.tsx   # Authentication
-│   ├── theme-context.tsx  # Dark mode
-│   └── toast-context.tsx  # Notifications
-├── lib/                   # Utility libraries
-│   └── api.ts            # API service
+│   ├── AuthContext.tsx    # Authentication
+│   ├── ThemeContext.tsx   # Dark mode
+│   └── ToastContext.tsx   # Notifications
 ├── types/                 # TypeScript definitions
 │   └── index.ts          # Type definitions
 └── middleware.ts          # Route protection
@@ -156,7 +154,7 @@ The application is deployed on Vercel and can be accessed at:
 - TypeScript throughout
 - Framer Motion animations
 - Toast notifications
-- Route protection middleware
+- Route protection with Next.js middleware
 
 ### ⚠️ Omitted/Simplified
 - **Advanced drag & drop**: Used Framer Motion's basic drag instead of complex drop zones
@@ -184,7 +182,7 @@ The application is deployed on Vercel and can be accessed at:
 ## 🎨 Design Decisions
 
 - **Color Scheme**: Blue primary with semantic colors for priorities
-- **Typography**: Inter font for clean, modern look
+- **Typography**: Clean, modern typography with Tailwind CSS
 - **Spacing**: Consistent 4px grid system
 - **Animations**: Subtle, purposeful motion for better UX
 - **Icons**: Lucide React for consistency and accessibility

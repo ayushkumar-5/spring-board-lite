@@ -1,17 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+"use client";
+
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ToastProvider } from "@/contexts/ToastContext";
-import ToastContainer from "@/components/toast";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Sprint Board Lite",
-  description: "A simple task management app",
-};
+import ToastContainer from "@/components/ToastContainer";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -20,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <AuthProvider>
           <ThemeProvider>
             <ToastProvider>
