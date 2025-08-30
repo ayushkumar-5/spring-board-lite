@@ -36,3 +36,4 @@ trap cleanup SIGINT
 # Wait for both processes
 wait
 
+
