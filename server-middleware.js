@@ -1,4 +1,4 @@
-export default (req, res, next) => {
+module.exports = (req, res, next) => {
   // Simulate 10% failure rate for PATCH and POST requests
   if ((req.method === 'PATCH' || req.method === 'POST') && Math.random() < 0.1) {
     console.log(`🚨 Simulating API failure for ${req.method} ${req.path}`);
