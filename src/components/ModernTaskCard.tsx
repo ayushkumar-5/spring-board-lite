@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Task } from '../types';
-import { Edit2, Trash2, MoreVertical, Wifi, WifiOff } from 'lucide-react';
+import { Edit2, Trash2, MoreVertical } from 'lucide-react';
 import EditTaskModal from './EditTaskModal';
-import { offlineQueue } from '../services/offlineQueue';
+
 
 interface ModernTaskCardProps {
   task: Task;
@@ -24,12 +24,11 @@ const ModernTaskCard: React.FC<ModernTaskCardProps> = ({
   const [showEditModal, setShowEditModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [isOnline, setIsOnline] = useState(offlineQueue.isOnlineStatus());
+
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Check if this task is queued
   const isQueued = task.id.startsWith('temp-');
-  const queuedActionId = isQueued ? task.id.replace('temp-', '') : null;
 
   const {
     attributes,
@@ -91,20 +90,16 @@ const ModernTaskCard: React.FC<ModernTaskCardProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isFocused, task.id, onMoveLeft, onMoveRight]);
 
-  // Listen for online/offline status changes
-  useEffect(() => {
-    const unsubscribe = offlineQueue.addListener((online) => {
-      setIsOnline(online);
-    });
-    return unsubscribe;
-  }, []);
+
 
   return (
     <>
       <div
         ref={(node) => {
           setNodeRef(node);
-          cardRef.current = node;
+          if (cardRef.current !== node) {
+            (cardRef as any).current = node;
+          }
         }}
         style={style}
         {...attributes}
@@ -126,7 +121,6 @@ const ModernTaskCard: React.FC<ModernTaskCardProps> = ({
             {/* Offline Queue Badge */}
             {isQueued && (
               <div className="flex items-center space-x-1 px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400 rounded-full text-xs font-medium">
-                <WifiOff size={12} />
                 <span>Queued</span>
               </div>
             )}

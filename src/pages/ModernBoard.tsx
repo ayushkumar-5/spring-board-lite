@@ -270,11 +270,11 @@ const ModernBoard: React.FC = () => {
     await handleTaskMove(taskId, currentStatus, newStatus);
   };
 
-  const handleTaskMove = async (taskId: string, fromStatus: string, toStatus: string) => {
+  const handleTaskMove = async (taskId: string, fromStatus: "todo" | "in-progress" | "done", toStatus: "todo" | "in-progress" | "done") => {
     try {
       // Optimistic update
       setTasks(prev => prev.map(t =>
-        t.id === taskId ? { ...t, status: toStatus } : t
+        t.id === taskId ? { ...t, status: toStatus as "todo" | "in-progress" | "done" } : t
       ));
 
       // Update server
@@ -298,7 +298,7 @@ const ModernBoard: React.FC = () => {
     } catch (err) {
       // Rollback on failure
       setTasks(prev => prev.map(t =>
-        t.id === taskId ? { ...t, status: fromStatus } : t
+        t.id === taskId ? { ...t, status: fromStatus as "todo" | "in-progress" | "done" } : t
       ));
       showToast('Failed to move task', 'error');
     }

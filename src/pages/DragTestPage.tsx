@@ -59,7 +59,11 @@ const TestColumn: React.FC<{ id: string; title: string; tasks: { id: string; tit
 };
 
 const DragTestPage: React.FC = () => {
-  const [tasks, setTasks] = useState({
+  const [tasks, setTasks] = useState<{
+    todo: { id: string; title: string }[];
+    'in-progress': { id: string; title: string }[];
+    done: { id: string; title: string }[];
+  }>({
     todo: [
       { id: '1', title: 'Task 1' },
       { id: '2', title: 'Task 2' },
@@ -111,12 +115,12 @@ const DragTestPage: React.FC = () => {
     }
 
     if (fromColumn && fromColumn !== overId) {
-      const task = tasks[fromColumn].find(t => t.id === activeId);
+      const task = (tasks as any)[fromColumn].find((t: any) => t.id === activeId);
       if (task) {
         setTasks(prev => ({
           ...prev,
-          [fromColumn]: prev[fromColumn].filter(t => t.id !== activeId),
-          [overId]: [...prev[overId], task],
+          [fromColumn]: (prev as any)[fromColumn].filter((t: any) => t.id !== activeId),
+          [overId]: [...(prev as any)[overId], task],
         }));
       }
     }

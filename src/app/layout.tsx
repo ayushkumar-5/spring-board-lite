@@ -4,7 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ToastProvider } from "@/contexts/ToastContext";
-import ToastContainer from "@/components/Toast";
+import ToastContainer from "@/components/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 

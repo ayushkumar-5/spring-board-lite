@@ -1,6 +1,6 @@
 import { Task, CreateTaskData, UpdateTaskData } from "@/types";
 
-const API_URL = process.env.NODE_ENV === "production" ? "/api" : "http://localhost:3001";
+const API_URL = import.meta.env.PROD ? "/api" : "http://localhost:3001";
 
 // Randomly fail some requests to test error handling
 const shouldFail = (method: string): boolean => {
