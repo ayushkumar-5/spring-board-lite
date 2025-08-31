@@ -140,29 +140,9 @@ The mock API randomly returns 500 errors for 10% of PATCH/POST requests to test:
 ## 🚀 Deployment
 
 The application is deployed on Vercel and can be accessed at:
-[Deployment URL]
+[[Deployment URL](https://prismatic-lily-661f9f.netlify.app/board)]
 
-## 📝 What's Done vs Omitted
 
-### ✅ Completed
-- All must-have features implemented
-- Variant A-G (Undo Move) fully functional
-- Mock API with failure simulation
-- Mobile-first responsive design
-- Dark mode with persistence
-- Loading and error states
-- TypeScript throughout
-- Framer Motion animations
-- Toast notifications
-- Route protection with Next.js middleware
-
-### ⚠️ Omitted/Simplified
-- **Advanced drag & drop**: Used Framer Motion's basic drag instead of complex drop zones
-- **Real-time updates**: No WebSocket implementation
-- **Offline support**: No service worker or offline queue
-- **Advanced filtering**: Basic priority filter only
-- **User management**: Single user mock authentication
-- **Data persistence**: No database, only json-server mock
 
 ## ⏱️ Time Spent
 
