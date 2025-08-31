@@ -140,7 +140,7 @@ The mock API randomly returns 500 errors for 10% of PATCH/POST requests to test:
 ## 🚀 Deployment
 
 The application is deployed on Vercel and can be accessed at:
-[[Deployment URL](https://prismatic-lily-661f9f.netlify.app/board)]
+[[Deployment URL](https://prismatic-lily-661f9f.netlify.app/)]
 
 
 
